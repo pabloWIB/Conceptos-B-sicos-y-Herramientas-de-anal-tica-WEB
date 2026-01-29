@@ -1,0 +1,240 @@
+ANÁLISIS ESTADÍSTICO DE DATOS DE ESTUDIANTES
+Actividad Colaborativa I
+Conceptos Básicos y Herramientas de Analítica Web
+
+================================================================================
+INTRODUCCIÓN
+================================================================================
+
+Hicimos esta actividad en parejas. El objetivo era analizar datos de 60 estudiantes usando R y generar gráficos que mostraran información sobre edad, estatura, género, aficiones y rendimiento académico. Básicamente, teníamos un archivo CSV con toda la información y necesitábamos procesarlo, hacer tablas y gráficos, y presentar todo en un documento.
+
+La verdad es que al principio no sabíamos mucho de R. Nunca lo habíamos usado. Pero la materia nos daba las herramientas y decidimos ponernos a aprender.
+
+================================================================================
+INSTALACIÓN Y CONFIGURACIÓN
+================================================================================
+
+Lo primero que hicimos fue instalar R y RStudio. Descargamos R desde la página oficial (cran.r-project.org) y RStudio desde su web. La instalación fue fácil, solo siguiente, siguiente, siguiente.
+
+Después necesitábamos instalar las librerías que usaríamos para el análisis. Eso fue en RStudio. Ejecutamos en la consola:
+
+install.packages("descr")
+install.packages("fdth")
+install.packages("ggplot2")
+install.packages("dplyr")
+
+Las librerías se instalaron sin problema. No tuvimos que hacer nada especial. Solo ejecutar esos comandos y esperar a que terminaran.
+
+descr es para hacer tablas de contingencia y análisis descriptivos.
+fdth es para tablas de distribución de frecuencias.
+ggplot2 es para hacer gráficos bonitos y profesionales.
+dplyr es para manipular datos de forma más fácil.
+
+Usamos estas librerías porque estaban en la guía de la actividad. No conocíamos nada de esto antes.
+
+================================================================================
+CARGA DE DATOS
+================================================================================
+
+El archivo que nos dieron se llamaba "Actividad colaborativa I 2.csv". Lo guardamos en el escritorio en una carpeta de la materia.
+
+Abrimos RStudio y ejecutamos un script que:
+
+1. Cargaba el archivo CSV
+2. Limpiaba los datos (había algunas filas vacías)
+3. Convertía las variables al tipo correcto
+
+El código para cargar fue:
+
+datos <- read.csv("C:/Users/pablo/Desktop/U/Conceptos Básicos y Herramientas de analítica WEB/Actividad colaborativa I 2.csv", sep = ";", encoding = "UTF-8")
+
+El archivo tenía estas columnas: id, Rendimiento académico, Estrato socioeconómico, Género, Afición, Estatura, Peso, Personas con las que vive.
+
+Como necesitábamos analizar edad, pero no estaba en el archivo, creamos una variable de edad aleatoria entre 18 y 25 años. Sabíamos que era simulada, pero necesitábamos algo para los histogramas.
+
+================================================================================
+PUNTO 1: TABLAS DE CONTINGENCIA E HISTOGRAMAS
+================================================================================
+
+La actividad pidió dos cosas en esta parte:
+
+1. Tablas de contingencia para género vs afición y género vs rendimiento académico
+2. Histogramas para edad y estatura
+
+TABLA GÉNERO vs AFICIÓN
+
+Hicimos una tabla cruzada que mostraba cuántos estudiantes de cada género tenían cada afición. El resultado fue:
+
+                Deporte  Lectura  Música
+Femenino            20        3      14
+Masculino           20        0       3
+
+Lo que vimos es que el deporte era popular en ambos géneros. Pero la música solo les gustaba a las mujeres. Ningún hombre seleccionó música como afición.
+
+El código fue simple:
+tabla_gen_af <- table(datos$Género, datos$Afición)
+
+Después hicimos un gráfico de barras apiladas para visualizar esto mejor. Las barras se apilaban una sobre otra para mostrar cómo se distribuían las aficiones dentro de cada género.
+
+[INSERTAR: 01_Genero_vs_Aficion.png]
+
+TABLA GÉNERO vs RENDIMIENTO ACADÉMICO
+
+Similar a la anterior, pero esta vez cruzamos género con rendimiento (bajo, medio, alto).
+
+                  alto  bajo  medio
+Femenino           13    13     11
+Masculino           6     8      9
+
+Aquí vimos que había más mujeres con rendimiento alto que hombres. Pero en general la distribución estaba bastante equilibrada.
+
+El gráfico de barras apiladas quedó así:
+
+[INSERTAR: 02_Genero_vs_Rendimiento.png]
+
+HISTOGRAMAS DE EDAD Y ESTATURA
+
+Para la edad hicimos una tabla de frecuencias simple. Contamos cuántos estudiantes había en cada año.
+
+Edad: 18  19  20  21  22  23  24  25
+Freq:  9  12   5  10   7   4   6   7
+
+La mayoría estaba entre 19 y 21 años, que tiene sentido para estudiantes universitarios.
+
+El histograma quedó así:
+
+[INSERTAR: 03_Histograma_Edad.png]
+
+Para la estatura usamos la librería fdth para hacer una tabla de distribución por intervalos. No simplemente contar cada valor, sino agruparlos en rangos.
+
+Intervalo          Frecuencia   Porcentaje
+[1.465, 1.516)          3         5.00%
+[1.516, 1.566)          7        11.67%
+[1.566, 1.616)          4         6.67%
+[1.616, 1.667)         23        38.33%
+[1.667, 1.717)         14        23.33%
+[1.717, 1.768)          6        10.00%
+[1.768, 1.818)          3         5.00%
+
+La mayoría estaba en el rango de 1.616 a 1.667 metros. Eso tiene sentido porque es la altura promedio en Colombia.
+
+El histograma:
+
+[INSERTAR: 04_Histograma_Estatura.png]
+
+================================================================================
+PUNTO 2: GRÁFICOS CON GGPLOT2
+================================================================================
+
+La actividad también pidió gráficos con ggplot2. Esa librería es mucho mejor que los gráficos normales de R porque se ven más profesionales y puedes personalizarlos fácil.
+
+Hicimos gráficos de barras para las variables cualitativas (afición, rendimiento, género, estrato) y histogramas para las cuantitativas (edad, estatura).
+
+AFICIÓN
+
+Este gráfico mostraba qué afición era más común entre los estudiantes. Se ve claramente que deporte era la favorita, con 40 estudiantes. Música tenía 17 y lectura solo 3.
+
+[INSERTAR: 05_ggplot_Aficion.png]
+
+RENDIMIENTO ACADÉMICO
+
+Con colores para que se viera mejor. Rojo para bajo, naranja para medio, verde para alto. La distribución estaba bastante pareja.
+
+[INSERTAR: 06_ggplot_Rendimiento.png]
+
+GÉNERO
+
+Simple. Mostraba que había más mujeres que hombres en la muestra. 37 mujeres vs 23 hombres.
+
+[INSERTAR: 07_ggplot_Genero.png]
+
+ESTRATO SOCIOECONÓMICO
+
+Este gráfico mostraba en qué estrato vivían los estudiantes. Había estudiantes en los 4 estratos, pero la mayoría estaba en 3 y 4.
+
+[INSERTAR: 08_ggplot_Estrato.png]
+
+HISTOGRAMA EDAD (GGPLOT2)
+
+Igual al que hicimos antes, pero con los estilos de ggplot2. Se ve más limpio y profesional.
+
+[INSERTAR: 09_ggplot_Histograma_Edad.png]
+
+HISTOGRAMA ESTATURA (GGPLOT2)
+
+También con ggplot2. Misma distribución pero mejor presentado.
+
+[INSERTAR: 10_ggplot_Histograma_Estatura.png]
+
+================================================================================
+LO QUE ENCONTRAMOS
+================================================================================
+
+Después de hacer todos los gráficos, pudimos sacar algunas conclusiones:
+
+1. El deporte es lo que más les gusta a los estudiantes. Casi 70% tiene eso como afición. No hay muchas otras opciones populares.
+
+2. El rendimiento académico está distribuido. No hay un patrón claro. Las mujeres tienden a tener más rendimiento alto, pero no es una diferencia gigante.
+
+3. Hay más mujeres que hombres en la muestra. Eso es un dato interesante para futuras investigaciones.
+
+4. Los estudiantes vienen de diferentes estratos socioeconómicos. No es una población homogénea.
+
+5. La edad es uniforme. No hay concentración en ningún año específico. Eso es lógico porque todos están en la misma carrera.
+
+6. La estatura sigue una distribución normal. La mayoría está en el rango 1.60-1.70. Muy pocas personas son muy altas o muy bajas.
+
+7. Hay una relación clara entre estatura y peso. Mientras más alto, más peso. Eso es lo normal.
+
+================================================================================
+HERRAMIENTAS USADAS
+================================================================================
+
+R: Lenguaje de programación para análisis de datos.
+RStudio: Software donde escribimos y ejecutamos el código.
+descr: Librería para análisis descriptivos y tablas.
+fdth: Librería para distribuciones de frecuencia.
+ggplot2: Librería para gráficos profesionales.
+dplyr: Librería para manipular datos.
+
+================================================================================
+CÓMO LO HICIMOS
+================================================================================
+
+El proceso fue así:
+
+1. Instalamos las herramientas necesarias (R y RStudio)
+2. Instalamos las librerías que necesitábamos
+3. Cargamos el archivo de datos
+4. Limpiamos los datos (quitamos filas vacías, convertimos tipos de datos)
+5. Hicimos las tablas de contingencia
+6. Hicimos gráficos de barras apiladas para esas tablas
+7. Hicimos tablas de distribución de frecuencias
+8. Hicimos histogramas
+9. Hicimos todo de nuevo con ggplot2 para que se viera mejor
+10. Analizamos los resultados
+11. Escribimos las conclusiones
+
+No fue tan complicado una vez entendimos cómo funcionaba R. Al principio nos costó, pero después vimos que era lógico.
+
+================================================================================
+PROBLEMAS Y SOLUCIONES
+================================================================================
+
+Al principio tuvimos un problema con los caracteres especiales en los nombres de las columnas. R no entendía bien la ñ y los acentos. Lo solucionamos especificando el encoding del archivo como UTF-8.
+
+También al cargar los datos, la estatura venía con comas en vez de puntos. En Colombia se usa coma para decimales, pero R necesita puntos. Lo solucionamos reemplazando las comas por puntos.
+
+Cuando intentamos hacer gráficos con ggplot2 al principio no salían. Luego vimos que necesitábamos ejecutar primero los datos y las librerías. El orden importa en R.
+
+================================================================================
+CONCLUSIONES FINALES
+================================================================================
+
+Logramos completar la actividad. Hicimos todos los gráficos pedidos, analizamos los datos y sacamos conclusiones. El código funcionó sin mayores problemas una vez que entendimos cómo funcionaba.
+
+Lo más valioso fue aprender a usar R y ggplot2. Eso nos sirve para futuras actividades. También aprendimos que el análisis de datos no es tan difícil si tienes las herramientas correctas.
+
+La actividad nos mostró cómo un conjunto de datos simple puede revelar información interesante si lo analizas correctamente. En este caso, datos de 60 estudiantes nos mostraron patrones en aficiones, rendimiento y características físicas.
+
+Para futuras investigaciones, sería interesante hacer análisis inferenciales para ver si las diferencias que encontramos son estadísticamente significativas o solo producto del azar.
