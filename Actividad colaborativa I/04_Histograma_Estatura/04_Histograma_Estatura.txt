@@ -1,0 +1,22 @@
+> freq_estatura <- fdt(datos$Estatura, breaks = "Sturges")
+> print(freq_estatura)
+  Class limits  f   rf rf(%) cf  cf(%)
+ [1.465,1.516)  3 0.05  5.00  3   5.00
+ [1.516,1.566)  7 0.12 11.67 10  16.67
+ [1.566,1.616)  4 0.07  6.67 14  23.33
+ [1.616,1.667) 23 0.38 38.33 37  61.67
+ [1.667,1.717) 14 0.23 23.33 51  85.00
+ [1.717,1.768)  6 0.10 10.00 57  95.00
+ [1.768,1.818)  3 0.05  5.00 60 100.00
+> 
+> png("04_Histograma_Estatura.png", width = 1000, height = 600)
+> hist(datos$Estatura,
++      main = "Distribución de Estatura de Estudiantes",
++      xlab = "Estatura (metros)",
++      ylab = "Frecuencia",
++      col = "#2ECC71",
++      border = "white",
++      breaks = 8)
+> dev.off()
+null device 
+          1 

@@ -1,0 +1,13 @@
+> png("09_ggplot_Histograma_Edad.png", width = 1000, height = 600)
+> ggplot(datos, aes(x = Edad, fill = '#3498DB')) +
++   geom_histogram(bins = 8, color = 'black', alpha = 0.7) +
++   labs(title = 'Distribución de Edad (ggplot2)',
++        x = 'Edad (años)',
++        y = 'Frecuencia',
++        subtitle = 'Histograma de edad de estudiantes') +
++   theme_minimal() +
++   theme(plot.title = element_text(face = 'bold', size = 14),
++         legend.position = 'none')
+> dev.off()
+null device 
+          1

@@ -1,0 +1,17 @@
+png("07_ggplot_Genero.png", width = 1000, height = 600)
+datos %>%
+  group_by(Género) %>%
+  summarise(Frecuencia = n()) %>%
+  ggplot(aes(x = Género, y = Frecuencia, fill = Género)) +
+  geom_bar(stat = 'identity', color = 'black') +
+  geom_text(aes(label = Frecuencia), vjust = -0.5, size = 5, fontface = 'bold') +
+  labs(title = 'Distribución de Género',
+       x = 'Género',
+       y = 'Frecuencia',
+       subtitle = 'Proporción de estudiantes') +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 12, face = 'bold'),
+        plot.title = element_text(face = 'bold', size = 14),
+        legend.position = 'right') +
+  scale_fill_manual(values = c('Masculino' = '#3498DB', 'Femenino' = '#E74C3C'))
+dev.off()

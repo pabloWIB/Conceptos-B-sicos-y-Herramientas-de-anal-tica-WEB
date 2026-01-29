@@ -1,0 +1,19 @@
+> png("08_ggplot_Estrato.png", width = 1000, height = 600)
+> datos %>%
++   group_by(Estrato.socioeconómico) %>%
++   summarise(Frecuencia = n()) %>%
++   ggplot(aes(x = Estrato.socioeconómico, y = Frecuencia, fill = Estrato.socioeconómico)) +
++   geom_bar(stat = 'identity', color = 'black') +
++   geom_text(aes(label = Frecuencia), vjust = -0.5, size = 5, fontface = 'bold') +
++   labs(title = 'Distribución de Estrato Socioeconómico',
++        x = 'Estrato',
++        y = 'Frecuencia',
++        subtitle = 'Clasificación económica de estudiantes') +
++   theme_minimal() +
++   theme(axis.text.x = element_text(size = 12, face = 'bold'),
++         plot.title = element_text(face = 'bold', size = 14),
++         legend.position = 'right') +
++   scale_fill_viridis_d()
+> dev.off()
+null device 
+          1
